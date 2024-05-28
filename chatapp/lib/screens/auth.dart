@@ -68,6 +68,8 @@ class _AuthScreenState extends State<AuthScreen> {
         });
       }
     } on FirebaseAuthException catch (e) {
+      if (e.code == "email-already-in-use") {}
+
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -137,8 +139,9 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                           if (!_isLogin)
                             TextFormField(
-                              decoration:
-                                  const InputDecoration(labelText: "Username"),
+                              decoration: const InputDecoration(
+                                labelText: "Username",
+                              ),
                               enableSuggestions: false,
                               validator: (value) {
                                 if (value == null ||
@@ -154,8 +157,9 @@ class _AuthScreenState extends State<AuthScreen> {
                               },
                             ),
                           TextFormField(
-                            decoration:
-                                const InputDecoration(labelText: "Password"),
+                            decoration: const InputDecoration(
+                              labelText: "Password",
+                            ),
                             obscureText: true,
                             validator: (value) {
                               if (value == null || value.trim().length < 6) {
